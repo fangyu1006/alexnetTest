@@ -1,8 +1,9 @@
 import caffe
 import numpy as np
 import time
+import cProfile
 
-caffe.set_mode_gpu()
+caffe.set_mode_cpu()
 model_def = 'deploy.prototxt'
 mdoel_weights = 'bvlc_alexnet.caffemodel'
 img_file = 'test.jpeg'
@@ -31,7 +32,7 @@ image = caffe.io.load_image(img_file)
 image_pre = transforms.preprocess('data', image)
 net.blobs['data'].data[...] = image_pre
 t0 = time.clock()
-output = net.forward()
+cProfile.run('output = net.forward()')
 t = time.clock() - t0
 print(t)
 output_pro = output['prob'][0]
