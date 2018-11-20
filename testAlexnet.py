@@ -32,7 +32,8 @@ image = caffe.io.load_image(img_file)
 image_pre = transforms.preprocess('data', image)
 net.blobs['data'].data[...] = image_pre
 t0 = time.clock()
-cProfile.run('output = net.forward()')
+for i in range(0, 10):
+    cProfile.run('output = net.forward()')
 t = time.clock() - t0
 print(t)
 output_pro = output['prob'][0]
